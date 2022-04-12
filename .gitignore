@@ -1,3 +1,11 @@
+#ignored ipynb files
+
 'ipynb files'/
+
+
+#ignored prob file
+
 *.xlsx
+
+#ignored
 'dask-worker-space'/
