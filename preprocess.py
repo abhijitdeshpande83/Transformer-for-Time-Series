@@ -20,7 +20,7 @@ import math
 from typing import Optional, Any
 from torch.utils.data import DataLoader
 from torch import optim
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score,balanced_accuracy_score
 import torch
 from torch import nn, Tensor
 from torch.nn import functional as F
@@ -358,7 +358,7 @@ class train_model():
         if metric:
             return best_loss.item(), auc_
         
-    def analyze(self,data,color='viridis'):
+    def analyze(self,data,color='viridis',return_prob=False):
         self.data = data
         self.model = self.model.eval()
         
@@ -369,7 +369,9 @@ class train_model():
             
             predictions = torch.argmax(prediction,1)
             accuracy = accuracy_score(predictions, y_test)
+            balanced_accuracy = balanced_accuracy_score(predictions, y_test)
             print('\033[92m'+'\nAccuracy: '+'\033[0m',accuracy)
+            print('\033[92m'+'\nBalanced Accuracy: '+'\033[0m',balanced_accuracy)
             print('\n'+'\033[0m'+         'Classification Report:\n')
             print(classification_report(y_test,predictions))
             print('\n'+'\033[0m'+         'Confusion Matrix:\n')
@@ -396,7 +398,7 @@ class train_model():
                 plt.show()
 
             except Exception as e:print(e)
-            return probs
+            if return_prob: return probs
         
 # In[8]:
 

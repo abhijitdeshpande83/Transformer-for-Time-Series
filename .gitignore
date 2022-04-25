@@ -9,3 +9,5 @@
 
 #ignored
 'dask-worker-space'/
+'__pycache__'/
+

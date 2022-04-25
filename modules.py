@@ -35,6 +35,7 @@ def _get_activation_fn(activation):
         return F.relu
     elif activation == "gelu":
         return F.gelu
+    else: return activation
     raise ValueError("activation should be relu/gelu, not {}".format(activation))
 
     
