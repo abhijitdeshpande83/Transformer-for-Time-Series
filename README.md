@@ -1,3 +1,6 @@
+## Transformer for Time Series
+![plot](./Users/abhijitdeshpande/Downloads/0*CHbkzNNYom6oLjq5.jpg)
+
 ### Modules 
 - Contains Transformer Encoder, ResNet, InceptionNet deep learning algorithmns, pytorch train & compilation, supervised and unsupervised 
 
