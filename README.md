@@ -19,55 +19,99 @@ To address these issues, this research integrates **De Prado–inspired data pre
 
 ## 🎯 Research Objectives
 
-Designing profitable quantitative models requires both **predictive accuracy** and **statistical robustness**.  
-This work pursues three core objectives:
-
-1. **Robust Data Structuring**  
-   Employ *Lopez de Prado’s financial data techniques* to construct an **information-dense, volatility-adjusted dataset**.  
-
-2. **Advanced Temporal Modeling**  
-   Develop a **Transformer Encoder–based architecture** capable of learning **non-linear, multi-scale dependencies** in financial time-series data.  
-
-3. **Rigorous Validation**  
-   Apply **Purged K-Fold Cross-Validation** to eliminate temporal leakage and ensure **true out-of-sample generalization**.  
+1. **Robust Data Structuring** — Construct an **information-dense, volatility-adjusted dataset** using Lopez de Prado’s techniques.  
+2. **Advanced Temporal Modeling** — Develop a **Transformer Encoder–based architecture** to learn **multi-scale, non-linear dependencies**.  
+3. **Rigorous Validation** — Apply **Purged K-Fold Cross-Validation** to avoid temporal leakage and ensure true out-of-sample generalization.  
 
 ---
 
-## 🧠 Methodology
+# 🧠 Transformer Encoder Block
 
-### 1. Data Structuring Pipeline — *De Prado Framework*
+![Transformer Encoder Block Diagram](https://miro.medium.com/v2/resize:fit:640/format:webp/1*7sjcgd_nyODdLbZSxyxz_g.png)
+*Source: [ResearchGate](https://www.researchgate.net/figure/Block-diagram-of-the-transformer-encoder_fig6_349339665)*
 
-#### 📊 Sampling Strategy: Dollar-Bars
-
-| Aspect | Time Bars | Dollar-Bars *(Used Here)* |
-|--------|------------|---------------------------|
-| Sampling Basis | Fixed time intervals (e.g., 1h) | Fixed cumulative traded dollar volume |
-| Data Quality | May contain redundant/noisy info | Equalizes economic information per bar |
-| Benefit | — | Improves signal-to-noise ratio & reduces autocorrelation |
-
-#### 🏷️ Labeling Mechanism: Triple-Barrier Method (TBM)
-
-| Barrier | Definition | Purpose |
-|----------|-------------|----------|
-| **Upper Barrier** | Price rises by volatility-adjusted threshold | Profit-taking event |
-| **Lower Barrier** | Price falls by volatility-adjusted threshold | Stop-loss trigger |
-| **Vertical Barrier** | Time constraint | Prevents stale or unclosed trades |
-
-#### ⚙️ Feature Engineering & Validation
-- Engineered **technical indicators**: RSI, MACD, Bollinger Bands, volatility measures  
-- Applied **PCA** for dimensionality reduction  
-- Implemented **Purged K-Fold Cross-Validation** to prevent temporal overlap  
+The Transformer Encoder is a fundamental component of the Transformer architecture, introduced in ["Attention Is All You Need"](https://arxiv.org/abs/1706.03762) by Vaswani et al. It generates contextualized representations for downstream tasks.
 
 ---
 
-### 2. Hybrid Transformer–LSTM Architecture
+## 🔁 Structure Overview
 
-| Component | Function |
-|------------|-----------|
-| **Positional Encoding** | Injects sequential order into input embeddings |
-| **Multi-Head Self-Attention** | Learns contextual dependencies across time steps |
-| **Feed-Forward Network (FFN)** | Enhances representational capacity via non-linear transformations |
-| **LSTM Layer (Hybrid)** | Models localized short-term dependencies complementing global attention |
+Each encoder block consists of:
+
+1. **Multi-Head Self-Attention (MHSA)**  
+2. **Add & Norm (Residual Connection + Layer Normalization)**  
+3. **Position-Wise Feed-Forward Network (FFN)**  
+4. **Add & Norm (Residual Connection + Layer Normalization)**  
+
+Typically stacked 6+ times to form the complete encoder.
+
+---
+
+## 🧩 Detailed Components
+
+### 1. Multi-Head Self-Attention (MHSA)
+
+- **Purpose:** Capture dependencies between all tokens in the sequence.
+- **Mechanism:** For each token, compute Query (Q), Key (K), and Value (V) vectors. Attention is:
+
+$$
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{Q K^\top}{\sqrt{d_k}}\right) V
+$$
+
+- **Multi-Heading:** Uses multiple attention heads to capture different relational aspects.
+
+### 2. Add & Norm
+
+- **Residual Connection:** Input + sub-layer output to aid gradient flow.  
+- **Layer Normalization:** Stabilizes training across features.
+
+### 3. Position-Wise Feed-Forward Network (FFN)
+
+$$
+\text{FFN}(x) = \text{max}(0, x W_1 + b_1) W_2 + b_2
+$$
+
+- **Activation:** ReLU or GELU.  
+- **Function:** Enhances token-wise representation independently.
+
+### 4. Add & Norm (FFN output)
+
+- Residual + normalization, as before.
+
+---
+
+## 🔄 Stacking Encoder Layers
+
+- 6+ identical layers  
+- Outputs of one layer feed as input to the next  
+- Enables progressively abstract sequence representations
+
+---
+
+## 🧭 Positional Encoding
+
+Since Transformers lack intrinsic order, positional encodings are added:
+
+$$
+\text{PE}_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{2i/d_{model}}}\right), \quad
+\text{PE}_{(pos, 2i+1)} = \cos\left(\frac{pos}{10000^{2i/d_{model}}}\right)
+$$
+
+---
+
+## ✅ Advantages
+
+- **Parallelization** — Faster than RNNs  
+- **Long-Range Dependencies** — Captures distant relationships  
+- **Scalability** — More layers/heads improve performance
+
+---
+
+## 📚 Further Reading
+
+- [Attention Is All You Need (Paper)](https://arxiv.org/abs/1706.03762)  
+- [The Illustrated Transformer](http://jalammar.github.io/illustrated-transformer/)  
+- [Transformer Explained Visually](https://poloclub.github.io/transformer-explainer/)
 
 ---
 
@@ -77,65 +121,43 @@ This work pursues three core objectives:
 
 | Parameter | Description |
 |------------|-------------|
-| **Dataset** | Multi-asset OHLCV data converted to Dollar-Bars |
+| **Dataset** | Multi-asset OHLCV converted to Dollar-Bars |
 | **Feature Set** | Technical indicators (RSI, MACD, Bollinger Bands), PCA-reduced |
 | **Labeling** | Triple-Barrier Method |
 | **Validation** | Purged K-Fold (5 folds) |
 | **Framework** | PyTorch |
 
----
-
 ### 2. Model Comparison
 
 | Model | Mean Balanced Accuracy | Mean AUC Score |
 |--------|------------------------|----------------|
-| **Transformer–LSTM (Proposed)** | 🟢 **62.1%** | 🟢 **0.65** |
+| **Transformer–LSTM (Proposed)** | 🟢 62.1% | 🟢 0.65 |
 | Random Forest | 55.4% | 0.58 |
-| Support Vector Machine (SVM) | 52.8% | 0.53 |
+| SVM | 52.8% | 0.53 |
 | Logistic Regression | 50.1% | 0.50 |
-
----
 
 ### 3. Insights & Discussion
 
-#### 🧠 Learning Dynamics
-- Attention layers captured **latent inter-bar dependencies** under volatile regimes.  
-- The LSTM hybridization enhanced **short-term predictive recall**, balancing the model’s temporal hierarchy.  
-- Dropout and normalization were crucial for **overfitting control** in low-sample regimes.  
-
-#### 🔍 Error & Regime Analysis
-- False positives aligned with **high-volatility (VIX spike)** periods.  
-- Model performance declined under **low-liquidity or range-bound** market regimes.  
-- Future enhancement: integrate **regime-switching volatility models** (e.g., GARCH).  
-
-#### 💡 Key Takeaways
-- **Transformers outperform traditional ML** in modeling non-stationary financial data.  
-- **Dollar-Bars + TBM** provided cleaner, economically relevant event labeling.  
-- **Hybrid attention architectures** enhance resilience to market shifts.  
-
----
-
-### 4. Visual Results
-
-Visualizations available under `figures/` directory:
-- `feature_importance.png` — PCA component contribution  
-- `roc_comparison.png` — Model ROC-AUC comparison  
-- `training_curves.png` — Loss convergence trends  
+- Attention layers captured **latent inter-bar dependencies**  
+- LSTM hybridization enhanced **short-term recall**  
+- False positives occurred during **high-volatility periods**  
+- Hybrid attention + Dollar-Bars/TBM improves **robustness and interpretability**
 
 ---
 
 ## 🔭 Future Directions
 
-- Explore **Temporal Fusion Transformers (TFT)** for interpretable multi-horizon forecasting.  
-- Integrate **volatility clustering** features (e.g., realized volatility, GARCH).  
-- Experiment with **adaptive fine-tuning** for regime-aware model updates.  
+- Temporal Fusion Transformers for multi-horizon forecasting  
+- Volatility clustering features (GARCH, realized volatility)  
+- Adaptive fine-tuning for regime-aware updates
 
 ---
 
 ## 🧩 Conclusion
 
-This research demonstrates that **attention-driven architectures** can significantly enhance robustness and interpretability in financial time-series modeling.  
-By combining **data integrity (Dollar-Bars, TBM)** with **Transformer-based learning**, the model effectively captures both **macro-level structures** and **micro-level patterns**, outperforming traditional baselines in both predictive power and stability.
+- Attention-based architectures improve **predictive power and robustness** in financial time series  
+- Data preprocessing (Dollar-Bars + TBM) ensures **economically meaningful labeling**  
+- Hybrid Transformer–LSTM captures **macro and micro temporal patterns**  
 
 ---
 
