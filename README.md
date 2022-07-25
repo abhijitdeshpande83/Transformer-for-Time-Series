@@ -1,40 +1,43 @@
-# 🚀 Exploring Deep Learning in Finance  
+# Exploring Deep Learning in Finance  
 **Attention-Based Transformer for Robust Financial Time Series Classification**
 
 ---
 
-## 🧩 Overview
+## Overview
 
 This Master's Thesis investigates the application of **Attention-Based Transformer Encoders** to build **robust Buy/Sell classification models** for financial time series data.  
 
 Financial markets are inherently **non-stationary, noisy, and regime-dependent**, which challenges conventional machine learning models.  
-To address these issues, this research integrates **De Prado–inspired data preprocessing** with a **hybrid Transformer–LSTM architecture**, enabling improved temporal modeling and robust evaluation.
+To address these issues, this research integrates **De Prado-inspired data preprocessing** with a **hybrid Transformer-LSTM architecture**, enabling improved temporal modeling and robust evaluation.
 
-### 🔑 Key Contributions
+### Key Contributions
 - **De Prado–Inspired Data Pipeline**: Combines *Dollar-Bars* sampling with the *Triple-Barrier Method* for economically meaningful labeling.  
 - **Hybrid Transformer–LSTM Model**: Fuses *long-range attention* with *short-term memory* for richer temporal understanding.  
 - **Leak-Free Evaluation Framework**: Implements *Purged K-Fold Cross-Validation* to ensure realistic backtesting integrity.  
 
 ---
 
-## 🎯 Research Objectives
+## Research Objectives
 
-1. **Robust Data Structuring** — Construct an **information-dense, volatility-adjusted dataset** using Lopez de Prado’s techniques.  
-2. **Advanced Temporal Modeling** — Develop a **Transformer Encoder–based architecture** to learn **multi-scale, non-linear dependencies**.  
-3. **Rigorous Validation** — Apply **Purged K-Fold Cross-Validation** to avoid temporal leakage and ensure true out-of-sample generalization.  
+1. **Robust Data Structuring**: Construct an **information-dense, volatility-adjusted dataset** using Lopez de Prado’s techniques.  
+2. **Advanced Temporal Modeling**: Develop a **Transformer Encoder–based architecture** to learn **multi-scale, non-linear dependencies**.  
+3. **Rigorous Validation**: Apply **Purged K-Fold Cross-Validation** to avoid temporal leakage and ensure true out-of-sample generalization.  
 
 ---
 
-# 🧠 Transformer Encoder Block
+# Transformer Encoder Block
 
-![Transformer Encoder Block Diagram](https://miro.medium.com/v2/resize:fit:640/format:webp/1*7sjcgd_nyODdLbZSxyxz_g.png)
+<p align="center">
+  <img src="https://miro.medium.com/v2/resize:fit:640/format:webp/1*7sjcgd_nyODdLbZSxyxz_g.png" alt="Transformer Encoder Block Diagram">
+</p>
+
 *Source: [ResearchGate](https://www.researchgate.net/figure/Block-diagram-of-the-transformer-encoder_fig6_349339665)*
 
 The Transformer Encoder is a fundamental component of the Transformer architecture, introduced in ["Attention Is All You Need"](https://arxiv.org/abs/1706.03762) by Vaswani et al. It generates contextualized representations for downstream tasks.
 
 ---
 
-## 🔁 Structure Overview
+## Structure Overview
 
 Each encoder block consists of:
 
@@ -47,7 +50,7 @@ Typically stacked 6+ times to form the complete encoder.
 
 ---
 
-## 🧩 Detailed Components
+## Detailed Components
 
 ### 1. Multi-Head Self-Attention (MHSA)
 
@@ -80,7 +83,7 @@ $$
 
 ---
 
-## 🔄 Stacking Encoder Layers
+## Stacking Encoder Layers
 
 - 6+ identical layers  
 - Outputs of one layer feed as input to the next  
@@ -88,7 +91,7 @@ $$
 
 ---
 
-## 🧭 Positional Encoding
+## Positional Encoding
 
 Since Transformers lack intrinsic order, positional encodings are added:
 
@@ -99,15 +102,15 @@ $$
 
 ---
 
-## ✅ Advantages
+## Advantages
 
-- **Parallelization** — Faster than RNNs  
-- **Long-Range Dependencies** — Captures distant relationships  
-- **Scalability** — More layers/heads improve performance
+- **Parallelization**: Faster than RNNs  
+- **Long-Range Dependencies**: Captures distant relationships  
+- **Scalability**: More layers/heads improve performance
 
 ---
 
-## 📚 Further Reading
+## Further Reading
 
 - [Attention Is All You Need (Paper)](https://arxiv.org/abs/1706.03762)  
 - [The Illustrated Transformer](http://jalammar.github.io/illustrated-transformer/)  
@@ -115,7 +118,7 @@ $$
 
 ---
 
-## 📊 Results and Performance Analysis
+## Results and Performance Analysis
 
 ### 1. Experimental Setup
 
@@ -153,7 +156,7 @@ $$
 
 ---
 
-## 🧩 Conclusion
+## Conclusion
 
 - Attention-based architectures improve **predictive power and robustness** in financial time series  
 - Data preprocessing (Dollar-Bars + TBM) ensures **economically meaningful labeling**  
@@ -161,6 +164,6 @@ $$
 
 ---
 
-📎 **Back to Main:** [README.md](./README.md)  
-📂 **Figures & Results:** [`figures/`](./figures)  
-📚 **Thesis Report:** [`thesis_document.pdf`](./docs/thesis_document.pdf)
+**Back to Main:** [README.md](./README.md)  
+**Figures & Results:** [`figures/`](./figures)  
+**Thesis Report:** [`thesis_document.pdf`](https://mavmatrix.uta.edu/industrialmanusys_theses/18/?utm_source=mavmatrix.uta.edu%2Findustrialmanusys_theses%2F18&utm_medium=PDF&utm_campaign=PDFCoverPages)
