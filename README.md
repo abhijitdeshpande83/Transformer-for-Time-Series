@@ -25,6 +25,88 @@ To address these issues, this research integrates **De Prado-inspired data prepr
 
 ---
 
+# Financial Data Labeling & Validation Techniques
+
+This section describes advanced techniques for **labeling financial time series** and **avoiding look-ahead bias during model evaluation**, based on *Advances in Financial Machine Learning* (López de Prado, 2018).
+
+---
+
+## Triple-Barrier Method (TBM)
+
+The **Triple-Barrier Method (TBM)** is a robust labeling technique that generates **economically meaningful labels** for supervised learning in finance.
+
+### What is TBM?
+
+TBM sets **three barriers** around the entry price of a trade:
+
+1. **Upper Barrier (Profit-Taking)** – label `+1` if price reaches a volatility-adjusted profit threshold.  
+2. **Lower Barrier (Stop-Loss)** – label `-1` if price drops below a volatility-adjusted loss threshold.  
+3. **Vertical Barrier (Time Limit)** – label `0` if a pre-defined time horizon expires without hitting upper/lower barriers.
+
+### Why Use TBM?
+
+- Produces **labels reflecting actual profit/loss events**.  
+- **Adapts to market volatility** using dynamic thresholds.  
+- Prevents **stale trades** with the vertical barrier.  
+- Reduces **look-ahead bias**, ensuring realistic model evaluation.
+
+### How to Implement TBM
+
+1. **Compute volatility-adjusted thresholds**:
+
+`Upper Barrier = p_t + k * sigma_t`  
+`Lower Barrier = p_t - k * sigma_t`
+
+Where:  
+- `p_t` = price at entry  
+- `sigma_t` = volatility estimate  
+- `k` = threshold multiplier
+
+
+2. **Monitor price until a barrier is hit** or the vertical barrier (time limit) is reached.  
+
+3. **Assign labels**:
+
+- `+1` → Upper barrier hit first (profit)  
+- `-1` → Lower barrier hit first (loss)  
+- `0` → Vertical barrier reached (neutral)
+
+---
+
+## Purged K-Fold Cross-Validation
+
+**Purged K-Fold CV** is an evaluation framework designed to **avoid look-ahead bias in financial data**, which is common in traditional K-Fold CV due to **temporal dependence** between samples.
+
+### What is Purged K-Fold?
+
+- Data is split into `K` folds like standard K-Fold.  
+- **Training samples that overlap with the test period are “purged”** to prevent leakage of future information.  
+- Optionally, a **“gap”** can be introduced between training and test sets to further reduce overlap effects.
+
+### Why Use Purged K-Fold in Finance?
+
+- Financial time series are **non-i.i.d. and autocorrelated**; standard K-Fold can **inflate performance metrics** by leaking information.  
+- Purging ensures that **no training sample contains information from the future**, producing **more realistic out-of-sample performance estimates**.  
+- Particularly important when using **event-based labeling** like TBM, where price movements affect multiple sequential samples.
+
+### Key Benefits
+
+- **Leak-free evaluation** of predictive models  
+- Accurate **out-of-sample performance estimation**  
+- Reduces **false optimism** in backtesting
+
+---
+
+**Summary:**  
+
+- **TBM** creates structured, economically meaningful labels for financial ML.  
+- **Purged K-Fold CV** ensures **robust, leak-free model evaluation**, preventing look-ahead bias common in traditional K-Fold for time series.
+
+---
+
+**Reference:**  
+- López de Prado, M. (2018). *Advances in Financial Machine Learning*. Wiley.
+
 # Transformer Encoder Block
 
 <p align="center">
@@ -167,3 +249,4 @@ $$
 **Back to Main:** [README.md](./README.md)  
 **Figures & Results:** [`figures/`](./figures)  
 **Thesis Report:** [`thesis_document.pdf`](https://mavmatrix.uta.edu/industrialmanusys_theses/18/?utm_source=mavmatrix.uta.edu%2Findustrialmanusys_theses%2F18&utm_medium=PDF&utm_campaign=PDFCoverPages)
+
