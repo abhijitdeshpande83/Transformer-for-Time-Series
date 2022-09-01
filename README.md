@@ -17,6 +17,16 @@ To address these issues, this research integrates **De Prado-inspired data prepr
 
 ---
 
+<table>
+<img src="https://img.shields.io/badge/Model-Transformer--LSTM-blueviolet" alt="Transformer-LSTM">
+<img src="https://img.shields.io/badge/Python-3.8%2B-green" alt="Python Version">
+<img src="https://img.shields.io/badge/Framework-PyTorch-red" alt="PyTorch Framework">
+<img src="https://img.shields.io/badge/Domain-Financial%20Modeling-blue" alt="Financial Modeling">
+
+</table>
+
+---
+
 ## Research Objectives
 
 1. **Robust Data Structuring**: Construct an **information-dense, volatility-adjusted dataset** using Lopez de Prado’s techniques.  
