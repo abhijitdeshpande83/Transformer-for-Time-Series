@@ -224,12 +224,16 @@ $$
 
 ### 2. Model Comparison
 
-| Model | Mean Balanced Accuracy | Mean AUC Score |
-|--------|------------------------|----------------|
-| **Transformer–LSTM (Proposed)** | 🟢 62.1% | 🟢 0.65 |
-| Random Forest | 55.4% | 0.58 |
-| SVM | 52.8% | 0.53 |
-| Logistic Regression | 50.1% | 0.50 |
+The table below summarizes the average performance of all models across the full range of look-back and look-forward window configurations (3, 5, 7, and 10 days) on the 9-stock dataset. These results demonstrate the overall superiority of the attention-based model.
+
+| Model | Mean Precision (Across 16 Settings) | Mean AUC Score (Across 16 Settings) |
+|--------|-------------------------------------|-------------------------------------|
+| **Transformer (Hybrid)** | 🟢 60.3% | 🟢 0.57 |
+| Random Forest | 55.9% | 0.53 |
+| Logistic Regression | 53.3% | 0.53 |
+| SVM | 47.8% | 0.49 |
+
+> The Transformer model consistently outperforms traditional methods, achieving a meaningful predictive edge with a 60.3% average precision across all experimental settings.
 
 ### 3. Insights & Discussion
 
@@ -240,7 +244,7 @@ $$
 
 ---
 
-## 🔭 Future Directions
+## Future Directions
 
 - Temporal Fusion Transformers for multi-horizon forecasting  
 - Volatility clustering features (GARCH, realized volatility)  
