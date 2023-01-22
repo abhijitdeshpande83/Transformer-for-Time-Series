@@ -17,12 +17,44 @@ To address these issues, this research integrates **De Prado-inspired data prepr
 
 ---
 
-<table>
-<img src="https://img.shields.io/badge/Model-Transformer--LSTM-blueviolet" alt="Transformer-LSTM">
-<img src="https://img.shields.io/badge/Python-3.8%2B-green" alt="Python Version">
-<img src="https://img.shields.io/badge/Framework-PyTorch-red" alt="PyTorch Framework">
-<img src="https://img.shields.io/badge/Domain-Financial%20Modeling-blue" alt="Financial Modeling">
+## Tech Stack & Tools
 
+<table>
+  <tr>
+    <td><strong>ML / DL Models</strong></td>
+    <td>
+      <img src="https://img.shields.io/badge/Transformer--LSTM-blueviolet" alt="Transformer-LSTM">
+      <img src="https://img.shields.io/badge/Random%20Forest-FF9900" alt="Random Forest">
+      <img src="https://img.shields.io/badge/Logistic%20Regression-6CC644" alt="Logistic Regression">
+      <img src="https://img.shields.io/badge/SVM-1E90FF" alt="SVM">
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Programming & Frameworks</strong></td>
+    <td>
+      <img src="https://img.shields.io/badge/Python-3.8%2B-green" alt="Python Version">
+      <img src="https://img.shields.io/badge/PyTorch-red" alt="PyTorch Framework">
+      <img src="https://img.shields.io/badge/Numpy-F5DEB3" alt="NumPy">
+      <img src="https://img.shields.io/badge/Pandas-150458" alt="Pandas">
+      <img src="https://img.shields.io/badge/Scikit--Learn-F7931E" alt="Scikit-learn">
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Financial / Data Tools</strong></td>
+    <td>
+      <img src="https://img.shields.io/badge/Dollar-Bars-4B0082" alt="Dollar-Bars">
+      <img src="https://img.shields.io/badge/Triple-Barrier-FF4500" alt="Triple-Barrier Method">
+      <img src="https://img.shields.io/badge/Matplotlib-008080" alt="Matplotlib">
+      <img src="https://img.shields.io/badge/Seaborn-FF69B4" alt="Seaborn">
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Utilities</strong></td>
+    <td>
+      <img src="https://img.shields.io/badge/Jupyter-F37626" alt="Jupyter Notebook">
+      <img src="https://img.shields.io/badge/Git-F05032" alt="Git">
+    </td>
+  </tr>
 </table>
 
 ---
